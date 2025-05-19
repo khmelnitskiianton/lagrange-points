@@ -195,7 +195,7 @@ D=(2-A)^2-4(1-A)(1+2A)=9A^{2}-8A=A\bigl(9A-8\bigr)\ge0.
 \begin{equation}\tag{1115}
   \frac{8}{9}\le A\le1.
 \end{equation}
-На рис.~\ref{fig:A_vs_mu} показано, что для любых $0<\mutwo\le0.5$ величина $A$ в точках $L_1$–$L_3$ превышает 1, значит, везде $\exists\lambda:Re\lambda > 0$, поэтому эти точки неустойчивы.
+На рис.~\ref{fig:A_vs_mu} показано, что для любых $0<\mutwo\le0.5$ величина $A$ в точках $L_1$–$L_3$ превышает 1, значит, везде $\exists\lambda:Re\lambda > 0$, поэтому эти точки неустойчивы по т.Ляпунова о лин. приближении.
 
 \begin{figure}[H]
   \centering
@@ -232,10 +232,10 @@ D=1-4a_0=1-27\,\mu_2\bigl(1-\mu_2\bigr)\ge0.
 \end{equation}
 Обозначив за критическое значение удельной массы $\mu_{crit} = \frac12\bigl(1-\sqrt{23/27}\bigr)\approx0.0385$
 \begin{equation}\tag{1118}
-  \mu = \frac{m_2}{m_1+m_2}< \mu_{crit}.
+  \mu = \frac{m_2}{m_1+m_2}< \mu_{crit} (\text{критерий Гаше(Gascheau stability criterion)})
 \end{equation}
 
-Возвращаясь к ~\eqref{eq:1050} получаем, что $a_1(\text{при }\gamma^3) = 0, a_3(\text{при }\gamma) = 0$ и условие, если $\mutwo < 0.0385$, то $\forall Re\lambda_i \leqslant 0$ - устойчивы по Ляпунову. При $\mutwo \geqslant 0.0385$ будет $\exists\lambda: Re\lambda > 0$, значит - неусточивые.
+Возвращаясь к ~\eqref{eq:1050} получаем, что $a_1(\text{при }\gamma^3) = 0, a_3(\text{при }\gamma) = 0$ и условие, если $\mutwo < 0.0385$, то $\forall Re\lambda_i \leqslant 0$ - устойчивы по Ляпунову. При $\mutwo \geqslant 0.0385$ будет $\exists\lambda: Re\lambda > 0$, значит - неусточивы по т.Ляпунова о лин. приближении.
 
 \bigskip
 
@@ -244,7 +244,7 @@ D=1-4a_0=1-27\,\mu_2\bigl(1-\mu_2\bigr)\ge0.
 Для 5 точек лагранжа: 
 \begin{itemize}
     \item Коллинеарные точки $L_1,L_2,L_3$ - неустойчивы по Ляпунову $\forall \mu$
-    \item Треугольные точки $L_4, L_5$ - устойчивы по Ляпунову при $\mu<\mu_{crit}$ и неустойчивы при $\mu \geqslant \mu_{crit}$
+    \item Треугольные точки $L_4, L_5$ - устойчивы по Ляпунову при $\mu<\mu_{crit}$(критерий Гаше) и неустойчивы при $\mu \geqslant \mu_{crit}$
 \end{itemize}
 
 Если малое тело удовлетворяет этому условию для $L_4,L_5$, возмущённое движение вокруг $L_4$ или $L_5$ остаётся ограниченным, что подтверждается орбитами троянских астероидов Юпитера и пылевыми облаками в системе Солнце–Земля.
@@ -463,6 +463,8 @@ C_i = 2\,U_{\mathrm{эфф}}(L_i).
 \url{https://ru.wikipedia.org/wiki/Задача_трёх_тел}\\
 \url{https://ru.wikipedia.org/wiki/Интеграл_Якоби}\\
 \url{https://ocw.mit.edu/courses/aeronautics-and-astronautics/16-07-dynamics-fall-2009/lecture-notes/MIT16_07F09_Lec18.pdf}\\
+\url{https://hal.science/hal-00552502/document}\\
+\url{https://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=8093&context=etd_theses}\\
 \url{https://farside.ph.utexas.edu/teaching/336k/Newton/node124.html}\\
 \url{https://farside.ph.utexas.edu/teaching/336k/Newton/node126.html}\\
 \url{https://math-mech-astr-journal.spbu.ru/article/view/15502/10422}\\
