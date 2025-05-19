@@ -50,7 +50,7 @@
 Перейдём к неинерциальной системе координат, вращающейся с постоянной угловой скоростью $\omega$ вокруг оси, перпендикулярной плоскости орбит масс $m_1$ и $m_2$ и проходящей через их центр масс. В такой со‑вращающейся системе $m_1$ и $m_2$ покоятся. Введём декартову систему координат $(x,y)$ так, чтобы обе массивные частицы всегда находились на оси~$x$.
 
 Массы $m_1$ и $m_2$ занимают фиксированные положения
-\begin{equation}\label{eq:r1r2}
+\begin{equation}\label{eq:1}
   \rone = \mutwo\,(-1,0,0),\qquad
   \rtwo = \muone\,(1,0,0),
 \end{equation}
@@ -58,7 +58,7 @@
 
 Можно также ввести общий коэффициент $ \mu=m_2/(m_1+m_2) \quad \mu_2 = \mu, \mu_1 = 1 - \mu$, использовался в численных методах
 
-\begin{equation}\label{eq:rvec}
+\begin{equation}\label{eq:2}
   \rvec = (x,y,z).
 \end{equation}
 
@@ -70,42 +70,42 @@
 \end{figure}
 
 Уравнение движения $m_3$ в этой системе имеет вид
-\begin{equation}\tag{1050}\label{eq:1050}
+\begin{equation}\label{eq:3}
   \ddot{\rvec}+2\omegav\times\dot{\rvec}
   = -\frac{\muone\,(\rvec-\rone)}{\rho_1^{3}}
     -\frac{\mutwo\,(\rvec-\rtwo)}{\rho_2^{3}}
     +\omegav\times(\omegav\times \rvec),
 \end{equation}
 где $\omegav=(0,0,\omega)$, а
-\begin{align}\tag{1051}\label{eq:rho1}
+\begin{align}\label{eq:4}
   \rho_1^{2} &= (x+\mutwo)^2 + y^{2}+z^{2},\\[2pt]
-  \rho_2^{2} &= (x-\muone)^2 + y^{2}+z^{2}.\tag{1052}\label{eq:rho2}
+  \rho_2^{2} &= (x-\muone)^2 + y^{2}+z^{2}.\label{eq:5}
 \end{align}
-Второй член в левой части~\eqref{eq:1050} — кориолисово ускорение, а последний член в правой части — центробежное ускорение.
+Второй член в левой части~\eqref{eq:3} — кориолисово ускорение, а последний член в правой части — центробежное ускорение.
 
-Рассматривая декартовы компоненты, из~\eqref{eq:1050} получаем
-\begin{align}\tag{1053}\label{eq:1053}
+Рассматривая декартовы компоненты, из~\eqref{eq:3} получаем
+\begin{align}\label{eq:6}
   \ddot x - 2\omega\dot y &= -\frac{\muone\,(x+\mutwo)}{\rho_1^{3}}-\frac{\mutwo\,(x-\muone)}{\rho_2^{3}}+\omega^{2}x,\\[2pt]
-\tag{1054}\label{eq:1054}
+\label{eq:7}
   \ddot y + 2\omega\dot x &= -\biggl(\frac{\muone}{\rho_1^{3}}+\frac{\mutwo}{\rho_2^{3}}\biggr)y + \omega^{2}y,\\[2pt]
-\tag{1055}\label{eq:1055}
+\label{eq:8}
   \ddot z &= -\biggl(\frac{\muone}{\rho_1^{3}}+\frac{\mutwo}{\rho_2^{3}}\biggr)z.
 \end{align}
 
 Введём комбинированный потенциал (гравитационный $+$ центробежный)
-\begin{equation}\tag{1059}\label{eq:U}
+\begin{equation}\label{eq:9}
   U(x,y,z) = -\frac{\muone}{\rho_1}-\frac{\mutwo}{\rho_2}-\frac{\omega^{2}}{2}(x^{2}+y^{2}).
 \end{equation}
-Тогда уравнения\,(\ref{eq:1053})–(\ref{eq:1055}) можно записать компактно как
-\begin{equation}\tag{1056--1058}
+Тогда уравнения\,(\ref{eq:6})–(\ref{eq:8}) можно записать компактно как
+\begin{equation}
   \ddot {\mathbf q} + 2\omegav\times\dot{\mathbf q} = -\nabla U,\qquad \mathbf q=(x,y,z).
 \end{equation}
 Следует дифференциальное тождество
-\begin{equation}\tag{1063}\label{eq:jacobi}
+\begin{equation}\label{eq:10}
   \frac{\dd}{\dd t}\Bigl[\tfrac12(\dot x^{2}+\dot y^{2}+\dot z^{2})+U\Bigr]=0,
 \end{equation}
 что приводит к интегралу Якоби
-\begin{equation}\tag{1064}
+\begin{equation}
   C = -2U-v^{2},\qquad v^{2}=\dot x^{2}+\dot y^{2}+\dot z^{2},
 \end{equation}
 ограничивающему область допустимого движения условием $-2U\ge C$. \par
@@ -117,15 +117,15 @@
 Пять точек Лагранжа~$L_1$–$L_5$ являются точками равновесия для массы $m_3$ в со‑вращающейся системе. Определим их устойчивость при малых возмущениях.
 
 Пусть координаты точки Лагранжа $(x_0,y_0,0)$. Для малых отклонений положим
-\begin{equation}\tag{1097--1099}
+\begin{equation}
   x=x_0+\delta x,\qquad y=y_0+\delta y,\qquad z=0.
 \end{equation}
 Разложив потенциал в ряд Тейлора до второго порядка и учитывая, что $\nabla U=0$ в самой точке, получим
-\begin{equation}\tag{1101}\label{eq:Uxy}
+\begin{equation}\label{eq:11}
   U\approx U_0+\tfrac12 U_{xx}\,\delta x^{2}+U_{xy}\,\delta x\,\delta y+\tfrac12 U_{yy}\,\delta y^{2}.
 \end{equation}
-Подставляя~\eqref{eq:Uxy} в линеризованные уравнения движения и полагая $\delta x,\delta y\propto e^{\gamma t}$, приходим к системе
-\begin{align}\tag{1104}\label{eq:matrix}
+Подставляя~\eqref{eq:11} в линеризованные уравнения движения и полагая $\delta x,\delta y\propto e^{\gamma t}$, приходим к системе
+\begin{align}\label{eq:12}
   \begin{pmatrix}
     \gamma^{2}+U_{xx} & -2\gamma+U_{xy}\\[4pt]
     2\gamma+U_{xy} & \gamma^{2}+U_{yy}
@@ -133,29 +133,29 @@
   \begin{pmatrix}\delta x_0\\ \delta y_0\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}.
 \end{align}
 Необходимое условие ненулевого решения — зануление детерминанта, что даёт уравнение
-\begin{equation}\tag{1105}\label{eq:quartic}
+\begin{equation}\label{eq:13}
   \gamma^{4}+(4+U_{xx}+U_{yy})\gamma^{2}+(U_{xx}U_{yy}-U_{xy}^{2})=0.
 \end{equation}
 
 Введём обозначения
-\begin{align}\tag{1106--1109}
+\begin{align}
   A &= \frac{\muone}{\rho_1^{3}}+\frac{\mutwo}{\rho_2^{3}}, &
   B &= 3\bigl(\frac{\muone}{\rho_1^{5}}+\frac{\mutwo}{\rho_2^{5}}\bigr)y^{2},\\
   C &= 3\bigl[\frac{\muone(x+\mutwo)}{\rho_1^{5}}+\frac{\mutwo(x-\muone)}{\rho_2^{5}}\bigr]y, &
   D &= 3\bigl[\frac{\muone(x+\mutwo)^{2}}{\rho_1^{3}}+\frac{\mutwo(x-\muone)^{2}}{\rho_2^{3}}\bigr],
 \end{align}
 что приводит к
-\begin{equation}\tag{1110--1112}
+\begin{equation}
   U_{xx}=A-D-1,\quad U_{yy}=A-B-1,\quad U_{xy}=-C.
 \end{equation}
 
 \subsubsection{Коллинеарные точки $L_1,\,L_2,\,L_3$}
 Для $y=0$ получаем $B=C=0$, $D=3A$, откуда
-\begin{equation}\label{eq:Ucol}\tag{*}
+\begin{equation}\label{eq:14}
   U_{xx}=-1-2A,\quad U_{yy}=A-1,\quad U_{xy}=0.
 \end{equation}
 Обозначив $\Gamma=\gamma^{2}$, характеристическое уравнение принимает вид
-\begin{equation}\tag{1113}
+\begin{equation}
   \Gamma^{2}+(2-A)\Gamma+(1-A)(1+2A)=0.
 \end{equation}
 Обозначим
@@ -192,7 +192,7 @@ D=(2-A)^2-4(1-A)(1+2A)=9A^{2}-8A=A\bigl(9A-8\bigr)\ge0.
 
 
 Используя условие на дискриминант и т.Виета получаем, что корни будут отрицательными и действительными лишь при
-\begin{equation}\tag{1115}
+\begin{equation}
   \frac{8}{9}\le A\le1.
 \end{equation}
 На рис.~\ref{fig:A_vs_mu} показано, что для любых $0<\mutwo\le0.5$ величина $A$ в точках $L_1$–$L_3$ превышает 1, значит, везде $\exists\lambda:Re\lambda > 0$, поэтому эти точки неустойчивы по т.Ляпунова о лин. приближении.
@@ -208,7 +208,7 @@ D=(2-A)^2-4(1-A)(1+2A)=9A^{2}-8A=A\bigl(9A-8\bigr)\ge0.
 Для этих точек $\rho_1=\rho_2=1$, откуда $A=1$, $B=9/4$, $D=3/4$ и
 \[U_{xy}=\mp\sqrt{27/16}\,(1-2\mutwo).\]
 Уравнение на $\Gamma$:
-\begin{equation}\tag{1116}
+\begin{equation}
   \Gamma^{2}+\Gamma+\frac{27}{4}\,\mutwo(1-\mutwo)=0.
 \end{equation}
 Чтобы корни были также действительными, проверяем дискриминант:
@@ -227,15 +227,60 @@ D=1-4a_0=1-27\,\mu_2\bigl(1-\mu_2\bigr)\ge0.
 из двух интервалов
 \(\bigl(-\infty,\mu_-\bigr]\cup\bigl[\mu_+,\infty\bigr)\)
 нас интересует лишь левый.  Следовательно,
-\begin{equation}\tag{1117}
+\begin{equation}
   \mutwo<\frac12\bigl(1-\sqrt{23/27}\bigr)\approx0.0385.
 \end{equation}
 Обозначив за критическое значение приведенной массы $\mu_{crit} = \frac12\bigl(1-\sqrt{23/27}\bigr)\approx0.0385$
-\begin{equation}\tag{1118}
-  \mu = \frac{m_2}{m_1+m_2}< \mu_{crit} (\text{критерий Гаше(Gascheau stability criterion)})
+\begin{equation}
+  \mu = \frac{m_2}{m_1+m_2}< \mu_{crit} \quad(\text{Gascheau stability criterion})
 \end{equation}
 
-Возвращаясь к ~\eqref{eq:1050} получаем, что $a_1(\text{при }\gamma^3) = 0, a_3(\text{при }\gamma) = 0$ и условие, если $\mutwo < 0.0385$, то $\forall Re\lambda_i \leqslant 0$ - устойчивы по Ляпунову. При $\mutwo \geqslant 0.0385$ будет $\exists\lambda: Re\lambda > 0$, значит - неусточивы по т.Ляпунова о лин. приближении.
+Возвращаясь к ~\eqref{eq:13} получаем, что $a_1(\text{при }\gamma^3) = 0, a_3(\text{при }\gamma) = 0$.
+
+\[\gamma^4+a\gamma^2+b=0\]
+
+Для треугольных точек:
+\[
+U_{xx}=\frac34,\;
+U_{yy}=\frac94,\;
+U_{xy}=-\frac{3\sqrt3}{4}(1-2\mu)
+\quad\Longrightarrow\quad
+a = 4-\frac34-\frac94 = 1,
+\]
+\[
+b=\frac34\cdot\frac94-\Bigl[\tfrac{3\sqrt3}{4}(1-2\mu)\Bigr]^2
+  =\frac{27}{4}\,\mu(1-\mu).
+\]
+
+Решаем квадратное уравнение с заменой $s=\gamma^{2}$.
+
+\[
+s^{2}+a\,s+b=0
+\quad\Longrightarrow\quad
+s_{\pm}= \frac{-a\pm\sqrt{a^{2}-4b}}{2}.
+\]
+
+При указанных $a,b$ если брать $\mu < \mu_{crit}$, то:
+\begin{itemize}
+    \item подкоренное выражение $a^{2}-4b>0$;
+    \item Числитель $-a\pm\sqrt{\dots}$ отрицателен для обеих ветвей, потому что $0<\sqrt{a^{2}-4b}<a$.
+\end{itemize}
+Получаем
+\[
+s_{\pm}<0.
+\]
+Переходим к исходному биквадратному с $\gamma$.
+\[
+\gamma^{2}=s<0
+\quad\Longrightarrow\quad
+\gamma=\pm i\sqrt{|s|},
+\qquad
+\operatorname{Re}\gamma=0.
+\]
+Значит $L_{4},L_{5}$ устойчивы по Ляпунову (но не асимптотически), т.к. $\forall \gamma_{i}: Re\gamma_{i} = 0(\gamma = \pm i \omega)$ - т.Ляпунова о лин. приближении.\\
+Иначе, при $\mu \textgreater\mu_{crit}$ будет существовать корень $s \geqslant 0$ у квадратного уравнения и как следствие у исходного $\exists \gamma: Re\gamma \geqslant 0 \quad \Longrightarrow$ по теореме Ляпунова о лин. приближении неустойчивы. 
+
+Получаем условие на $\mu$ (Gascheau stability criterion), если $\mutwo < 0.0385$, то $L_4,L_5$ устойчивы по Ляпунову(но не ассимптотически). При $\mutwo \geqslant 0.0385$ - неусточивы по т.Ляпунова о лин. приближении.
 
 \bigskip
 
@@ -244,7 +289,7 @@ D=1-4a_0=1-27\,\mu_2\bigl(1-\mu_2\bigr)\ge0.
 Для 5 точек лагранжа: 
 \begin{itemize}
     \item Коллинеарные точки $L_1,L_2,L_3$ - неустойчивы по Ляпунову $\forall \mu$
-    \item Треугольные точки $L_4, L_5$ - устойчивы по Ляпунову при $\mu<\mu_{crit}$(критерий Гаше) и неустойчивы при $\mu \geqslant \mu_{crit}$
+    \item Треугольные точки $L_4, L_5$ - устойчивы по Ляпунову при $\mu<\mu_{crit}$ и неустойчивы при $\mu \geqslant \mu_{crit}$, $\mu_{crit} \approx 0.0385$ (Gascheau stability criterion).
 \end{itemize}
 
 Если малое тело удовлетворяет этому условию для $L_4,L_5$, возмущённое движение вокруг $L_4$ или $L_5$ остаётся ограниченным, что подтверждается орбитами троянских астероидов Юпитера и пылевыми облаками в системе Солнце–Земля.
@@ -281,13 +326,12 @@ r_2=\sqrt{(x-1+\mu)^2+y^2}.
 
 \[
 \begin{aligned}
-\ddot x - 2\dot y &= \phantom{-}\frac{\partial U_{\mathrm{эфф}}}{\partial x},\\
-\ddot y + 2\dot x &= \phantom{-}\frac{\partial U_{\mathrm{эфф}}}{\partial y}.
+\ddot x - 2\dot y &= \phantom{-}\frac{dU_{\text{эфф}}}{dx},\\
+\ddot y + 2\dot x &= \phantom{-}\frac{dU_{\text{эфф}}}{dy}.
 \end{aligned}
-\tag{1}
 \]
 
-Вектор состояния\
+Вектор состояния
 \(\mathbf s=(x,y,\dot x,\dot y)\).
 
 \[
@@ -300,7 +344,6 @@ r_2=\sqrt{(x-1+\mu)^2+y^2}.
   y-\dfrac{(1-\mu)\,y}{r_1^{3}}
     -\dfrac{\mu\,y}{r_2^{3}}.
 \end{aligned}}
-\tag{EOM}
 \]
 Отдельный расчет в функции \texttt{rhs}:
 \begin{align*}
@@ -316,8 +359,7 @@ a_y = -2\dot x + dUdy.
 dUdx(x,\mu)=0,
 \quad\text{где }dUdx \text{ указан выше}.
 \]
-Решается система с начальными данными  
-\(\mathbf s_0=(x_0+\delta,y_0,0,0)\)
+Решается система с начальными данными дифф.уравнений
 методом DOP853 до безразмерного времени
 \(t_{\max}^{*}=t_{\max}\,\Omega\).
 
@@ -351,7 +393,7 @@ y=\pm\frac{\sqrt3}{2}.
 
 Будем рассматривать $L_1,L_4$:
 
-\subsubsection{$\mu=0.03$}
+\subsubsection{$\mu=0.029$}
 
 \begin{figure}[H]
   \centering
@@ -373,7 +415,7 @@ y=\pm\frac{\sqrt3}{2}.
         $L_1$: быстро растёт до $\sim10^{-1}$~м, далее колеблется возле границы ПНС.
 \end{itemize}
 
-\subsubsection{$\mu=0.047$} 
+\subsubsection{$\mu=0.044$} 
 
 \begin{figure}[H]
   \centering
