@@ -9,13 +9,14 @@
   - R(м) - расстояние между ними
   - Ω(c^-1) - угловая скорость вращения системы
   - t_max(с) - продолжительность моделирования по времени
-  - δ - шаг моделирования(интегрирования)
+  - Смещение стартового положения отн. т.Лагранжа - δx
+  - Смещение стартового положения отн. т.Лагранжа - δy
   - Точки(номера) - какие точки рассчитывать(цифры 1-5 через ',')
   - Интервал кадра(мс) - интервал между кадрами
 
 Дефолтные значения:
 defaults={'m1':'1','m2':'0.02','R':'1','Omega':'1',
-              't_max':'100','pert':'0.001','interval':'20','pts':'1,4'}
+              't_max':'100','dx0':'0.001', 'dy0': 0.001, 'interval':'20','pts':'1,4'}
 
 Графики:
   - Траектория за время t_max
@@ -78,13 +79,18 @@ def L_points(mu):
     return {"L1": (L1, 0), "L2": (L2, 0), "L3": (L3, 0), "L4": L4, "L5": L5}
 
 
+def U_eff(x, y, mu):
+    r1 = np.hypot(x + mu, y)
+    r2 = np.hypot(x - 1 + mu, y)
+    return -(1 - mu)/r1 - mu/r2 - 0.5*(x**2 + y**2)
+
 # Integrating equation of motion using DOP853
-# Getting arrays of t,x,y,vx,rL on the interval [0, t_max] with 'pert' step
-def solve_point(p, mu, R, Om, t_max, pert, steps=4000):
+# Getting arrays of t,x,y,vx,rL on the interval [0, t_max] with dx0,dy0 init shift 
+def solve_point(p, mu, R, Om, t_max, dx0, dy0, steps=2000):
     x0, y0 = L_points(mu)[p]
     if x0 is None:
         raise ValueError("нет корня")
-    st = np.array([x0 + pert, y0, 0, 0])
+    st = np.array([x0 + dx0, y0 + dy0, 0, 0])
     sol = solve_ivp(
         partial(rhs, mu=mu),
         (0, t_max * Om),
@@ -98,38 +104,47 @@ def solve_point(p, mu, R, Om, t_max, pert, steps=4000):
     y = R * sol.y[1]
     vx = R * Om * sol.y[2]
     t = sol.t / Om
-    return {"t": t, "x": x, "y": y, "vx": vx, "rL": np.array([R * x0, R * y0])}
+    c = -2*U_eff(sol.y[0], sol.y[1], mu) - (sol.y[2]**2 + sol.y[3]**2)
+    return {"t": t, "x": x, "y": y, "vx": vx, "rL": np.array([R * x0, R * y0]), "c": c}
 
 
 # Рендеринг графиков
-def make_plots(sel, mu, R, Om, t_max, pert):
+def make_plots(sel, mu, R, Om, t_max, dx0, dy0):
     k = len(sel)
     figT, axT = plt.subplots(1, k, figsize=(4 * k, 4))
     figP, axP = plt.subplots(1, k, figsize=(4 * k, 4))
     figD, axD = plt.subplots(1, k, figsize=(4 * k, 4))
+    figC, axC = plt.subplots(1, k, figsize=(4 * k, 4))
     if k == 1:
         axT = [axT]
         axP = [axP]
         axD = [axD]
+        axC = [axC]
     data = {}
-    for aT, aP, aD, pt in zip(axT, axP, axD, sel):
-        d = solve_point(pt, mu, R, Om, t_max, pert)
+    for aT, aP, aD, aC, pt in zip(axT, axP, axD, axC, sel):
+        d = solve_point(pt, mu, R, Om, t_max, dx0, dy0)
         data[pt] = d
+        
         aT.plot(d["x"], d["y"], color=pal[pt])
         aT.scatter(*d["rL"], color=pal[pt], marker="*")
         aT.set(title=f"Траектория {pt} ", xlabel="x (м)", ylabel="y (м)")
         aT.set_aspect("equal")
         aT.grid()
+        
         aP.plot(d["x"], d["vx"], color=pal[pt])
         aP.set(title=f"Фазовый портрет {pt} ", xlabel="x (м)", ylabel="vx (м/с)")
         aP.grid()
+        
         dist = np.hypot(d["x"] - d["rL"][0], d["y"] - d["rL"][1])
         aD.semilogy(d["t"], dist, color=pal[pt])
-        aD.set(
-            title=f"Расстояние тела до {pt} |δr|(t)", xlabel="t (с)", ylabel="|δr| (м)"
-        )
+        aD.set(title=f"Расстояние тела до {pt} |δr|(t)", xlabel="t (с)", ylabel="|δr| (м)")
         aD.grid()
-    for f in (figT, figP, figD):
+
+        aC.plot(d["t"], d["c"], color=pal[pt])
+        aC.set(title=f"Интеграл Якоби {pt} ", xlabel="t (с)", ylabel="C")
+        aC.grid()
+
+    for f in (figT, figP, figD, figC):
         f.tight_layout()
     return data
 
@@ -174,10 +189,10 @@ def animate(sel, data, R, mu, interval=40, trail=300):
 
 
 # Текстовое поле
-def summary_text(mu, sel, R, Om, t_max, pert):
+def summary_text(mu, sel, R, Om, t_max, dx0, dy0):
     txt = [
         f"μ = {mu:.5f}  (устойчивы L4,L5 если μ<0.03852)",
-        f"R = {R} м,  Ω = {Om} с⁻¹,  t_max = {t_max} с,  δ = {pert} м",
+        f"R = {R} м,  Ω = {Om} с⁻¹,  t_max = {t_max} с,  Начальное смещение отн. т.Лагранжа (δx м,δy м) = ({dx0},{dy0})",
         "Выбранные точки: " + ", ".join(sel),
     ]
     for p, (x, y) in L_points(mu).items():
@@ -189,7 +204,7 @@ def summary_text(mu, sel, R, Om, t_max, pert):
 def run(params):
     mu = params["m2"] / (params["m1"] + params["m2"])
     data = make_plots(
-        params["pts"], mu, params["R"], params["Omega"], params["t_max"], params["pert"]
+        params["pts"], mu, params["R"], params["Omega"], params["t_max"], params["dx0"], params["dy0"]
     )
     _ = animate(params["pts"], data, params["R"], mu, params["interval"])
 
@@ -206,7 +221,8 @@ def gui():
         "R": "1",
         "Omega": "1",
         "t_max": "100",
-        "pert": "0.001",
+        "dx0": "0.001",
+        "dy0": "0.001",
         "interval": "20",
         "pts": "1,4",
     }
@@ -217,7 +233,8 @@ def gui():
         "R": "R (м)",
         "Omega": "Ω (с⁻¹)",
         "t_max": "Продолжительность (с)",
-        "pert": "Шаг интегрирования δ",
+        "dx0": "Начальное смещение δx",
+        "dy0": "Начальное смещение δy",
         "interval": "Интервал между кадрами (мс)",
         "pts": "Точки(1-5)",
     }
@@ -237,7 +254,8 @@ def gui():
             R = float(entries["R"].get())
             Om = float(entries["Omega"].get())
             tmax = float(entries["t_max"].get())
-            pert = float(entries["pert"].get())
+            dx0 = float(entries["dx0"].get())
+            dy0 = float(entries["dy0"].get())
             inter = int(float(entries["interval"].get()))
             mapping = {"1": "L1", "2": "L2", "3": "L3", "4": "L4", "5": "L5"}
             pts = [
@@ -252,7 +270,7 @@ def gui():
             return
         summary.delete("1.0", tk.END)
         mu = m2 / (m1 + m2)
-        summary.insert(tk.END, summary_text(mu, pts, R, Om, tmax, pert))
+        summary.insert(tk.END, summary_text(mu, pts, R, Om, tmax, dx0, dy0))
         run(
             {
                 "m1": m1,
@@ -260,7 +278,8 @@ def gui():
                 "R": R,
                 "Omega": Om,
                 "t_max": tmax,
-                "pert": pert,
+                "dx0": dx0,
+                "dy0": dy0,
                 "pts": pts,
                 "interval": inter,
             }
@@ -279,7 +298,8 @@ def cli():
     R = float(input("R (м): "))
     Om = float(input("Ω (с^-1): "))
     t = float(input("t_max (с): "))
-    pert = float(input("δ: "))
+    dx0 = float(input("δx: "))
+    dy0 = float(input("δy: "))
     pts = [mp[p.strip()] for p in input("точки 1‑5: ").split(",") if p.strip() in mp]
     inter = int(float(input("интервал кадра (мс): ")))
     run(
@@ -289,7 +309,8 @@ def cli():
             "R": R,
             "Omega": Om,
             "t_max": t,
-            "pert": pert,
+            "dx0": dx0,
+            "dy0": dy0,
             "pts": pts,
             "interval": inter,
         }
